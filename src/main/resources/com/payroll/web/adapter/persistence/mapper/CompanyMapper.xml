@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.CompanyMapper">
+    <select id="selectCOMPANIES_byId" resultType="com.payroll.web.adapter.persistence.mapper.COMPANIES">
+        SELECT
+            COMPANY_ID,
+            COMPANY_NAME,
+            POSTAL_CODE,
+            ADDRESS
+        FROM
+            COMPANIES
+        WHERE
+            COMPANY_ID = #{id}
+    </select>
+    <insert id="insertCOMPANIES">
+        INSERT INTO
+            COMPANIES (
+                COMPANY_ID,
+                COMPANY_NAME,
+                POSTAL_CODE,
+                ADDRESS
+            )
+        VALUES (
+            #{companyId.rawId},
+            #{companyName.rawName},
+            #{companyLocation.postalCode.rawCode},
+            #{companyLocation.address.rawAddress}
+        )
+    </insert>
+</mapper>

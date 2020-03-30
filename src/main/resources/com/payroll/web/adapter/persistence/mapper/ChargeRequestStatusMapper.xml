@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestStatusMapper">
+    <insert id="insertCHARGE_REQUEST_STATUS">
+        INSERT INTO
+            CHARGE_REQUEST_STATUS (
+                CHARGE_REQUEST_ID,
+                CHARGE_REQUEST_STATUS,
+                UPDATE_DATE
+            )
+        VALUES (
+            #{chargeRequest.chargeRequestId.rawId},
+            #{chargeRequest.chargeRequestStatus},
+            #{updateDate}
+        )
+    </insert>
+</mapper>

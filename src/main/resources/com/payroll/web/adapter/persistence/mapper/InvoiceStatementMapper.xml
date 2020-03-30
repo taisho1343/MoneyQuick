@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.InvoiceStatementMapper">
+    <select id="selectINVOICE_STATEMENTS_byFundTransferUnitId"
+            resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS">
+        SELECT
+            INVOICE_STATEMENT_ID,
+            INVOICE_NUMBER,
+            FT_UNIT_ID,
+            PAYMENT_DEADLINE
+        FROM
+            INVOICE_STATEMENTS
+        WHERE
+            FT_UNIT_ID = #{fundTransferUnitId}
+    </select>
+</mapper>

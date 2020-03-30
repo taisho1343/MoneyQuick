@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: core_payroll
+    password: payroll
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost :1521:orcl
+mybatis:
+  type-handlers-package: com.payroll.web.adapter.persistence.typehandler
+  configuration:
+    map-underscore-to-camel-case: true

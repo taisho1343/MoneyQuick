@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.RepresentativeMapper">
+    <select id="selectREPRESENTATIVES_byCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.REPRESENTATIVES">
+        SELECT
+            REPRESENTATIVE_ID,
+            REPRESENTATIVE_NAME,
+            COMPANY_ID
+        FROM
+            REPRESENTATIVES
+        WHERE
+            COMPANY_ID = #{companyId}
+    </select>
+    <insert id="insertREPRESENTATIVES">
+        INSERT ALL
+        <foreach collection="representatives" item="representative">
+            INTO
+                REPRESENTATIVES (
+                    REPRESENTATIVE_ID,
+                    REPRESENTATIVE_NAME,
+                    COMPANY_ID
+                )
+            VALUES (
+                #{representative.representativeId.rawId},
+                #{representative.representativeName.rawName},
+                #{companyId.rawId}
+            )
+        </foreach>
+        SELECT * FROM DUAL
+    </insert>
+</mapper>

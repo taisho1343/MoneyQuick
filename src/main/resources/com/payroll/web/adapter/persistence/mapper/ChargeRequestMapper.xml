@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectCHARGE_REQUEST_ID_nextval" resultType="_long" flushCache="true">
+        SELECT
+            CHARGE_REQUEST_ID_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <insert id="insertCHARGE_REQUESTS">
+        INSERT INTO
+            CHARGE_REQUESTS (
+                CHARGE_REQUEST_ID,
+                FT_UNIT_ID,
+                TRANSFER_AMOUNT_OF_MONEY,
+                ACCOUNT_HOLDER,
+                FINANCIAL_INSTITUTION_CODE,
+                TYPE_NUMBER,
+                ACCOUNT_NUMBER
+            )
+        VALUES (
+            #{chargeRequest.chargeRequestId.rawId},
+            #{fundTransferUnitId.rawId},
+            #{chargeRequest.transferAmountOfMoney},
+            #{chargeRequest.accountForRequest.accountHolder.name},
+            #{chargeRequest.accountForRequest.account.financialInstitutionCode.rawCode},
+            #{chargeRequest.accountForRequest.account.typeNumber.rawNumber},
+            #{chargeRequest.accountForRequest.account.accountNumber.rawNumber}
+        )
+    </insert>
+</mapper>

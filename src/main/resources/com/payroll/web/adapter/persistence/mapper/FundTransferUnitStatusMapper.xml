@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.FundTransferUnitStatusMapper">
+    <select id="selectFT_UNIT_STATUS_byId_where_latest" resultType="com.payroll.web.adapter.persistence.mapper.FT_UNIT_STATUS">
+        SELECT
+            FT_UNIT_ID,
+            FT_UNIT_STATUS,
+            UPDATE_DATE
+        FROM
+            FT_UNIT_STATUS
+        WHERE
+            FT_UNIT_ID = #{id}
+        ORDER BY
+            UPDATE_DATE DESC
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+    <insert id="insertFT_UNIT_STATUS">
+        INSERT INTO
+            FT_UNIT_STATUS (
+                FT_UNIT_ID,
+                FT_UNIT_STATUS,
+                UPDATE_DATE
+            )
+        VALUES (
+            #{fundTransferUnit.fundTransferUnitId.rawId},
+            #{fundTransferUnit.fundTransferUnitStatus},
+            #{updateDate}
+        )
+    </insert>
+</mapper>

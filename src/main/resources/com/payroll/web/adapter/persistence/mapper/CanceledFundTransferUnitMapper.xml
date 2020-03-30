@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.CanceledFundTransferUnitMapper">
+    <select id="selectCANCELED_FT_UNITS" resultType="com.payroll.web.adapter.persistence.mapper.CANCELED_FT_UNITS">
+        SELECT
+            FT_UNIT_ID,
+            CANCELED_DATE
+        FROM
+            CANCELED_FT_UNITS
+        WHERE
+            FT_UNIT_ID = #{id}
+    </select>
+    <insert id="insertCANCELED_FT_UNITS">
+        INSERT INTO
+            CANCELED_FT_UNITS (
+                FT_UNIT_ID,
+                CANCELED_DATE
+            )
+        VALUES (
+            #{fundTransferUnitId.rawId},
+            #{canceledDate}
+        )
+    </insert>
+</mapper>
