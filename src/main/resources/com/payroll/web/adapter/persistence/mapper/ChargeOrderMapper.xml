@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeOrderMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectCHARGE_ORDER_ID_nextval" resultType="_long" flushCache="true">
+        SELECT
+            CHARGE_ORDER_ID_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectCHARGE_ORDERS_byInvoiceStatementId" resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_ORDERS">
+        SELECT
+            CHARGE_ORDER_ID,
+            CHARGE_MONEY,
+            DESIRED_CHARGE_MONEY,
+            PRIORITY,
+            PAYROLL_CARD_ID,
+            FT_COMPANY_ID,
+            INVOICE_STATEMENT_ID
+        FROM
+            CHARGE_ORDERS
+        WHERE
+            INVOICE_STATEMENT_ID = #{invoiceStatementId}
+    </select>
+    <insert id="insertCHARGE_ORDERS">
+        INSERT INTO
+            CHARGE_ORDERS (
+                CHARGE_ORDER_ID,
+                CHARGE_MONEY,
+                DESIRED_CHARGE_MONEY,
+                PRIORITY,
+                PAYROLL_CARD_ID,
+                FT_COMPANY_ID,
+                INVOICE_STATEMENT_ID
+            )
+        VALUES (
+            #{chargeOrder.chargeOrderId.rawId},
+            #{chargeOrder.chargeMoney},
+            #{chargeOrder.chargeTarget.desiredChargeMoney},
+            #{chargeOrder.chargeTarget.priority.value},
+            #{chargeOrder.chargeTarget.payrollCardId.rawId},
+            #{chargeOrder.chargeTarget.fundTransferCompanyId.rawId},
+            #{invoiceStatementId.rawId}
+        )
+    </insert>
+    <update id="updateCHARGE_ORDERS">
+        UPDATE
+            CHARGE_ORDERS
+        SET
+            CHARGE_MONEY = #{chargeOrder.chargeMoney},
+            DESIRED_CHARGE_MONEY = #{chargeOrder.chargeTarget.desiredChargeMoney},
+            PRIORITY = #{chargeOrder.chargeTarget.priority.value},
+            PAYROLL_CARD_ID = #{chargeOrder.chargeTarget.payrollCardId.rawId},
+            FT_COMPANY_ID = #{chargeOrder.chargeTarget.fundTransferCompanyId.rawId},
+            INVOICE_STATEMENT_ID = #{invoiceStatementId.rawId}
+        WHERE
+            CHARGE_ORDER_ID = #{chargeOrder.chargeOrderId.rawId}
+    </update>
+</mapper>

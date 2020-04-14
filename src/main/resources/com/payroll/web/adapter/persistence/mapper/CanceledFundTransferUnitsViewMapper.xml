@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.CanceledFundTransferUnitsViewMapper">
+    <select id="selectCANCELED_FT_UNITS_VIEW_bySearchCriteria" resultType="com.payroll.web.adapter.persistence.mapper.CANCELED_FT_UNITS_VIEW">
+        SELECT
+            FT_UNIT_ID,
+            CHARGE_DATE,
+            CREATED_DATE,
+            COMPANY_ID,
+            CANCELED_DATE
+        FROM
+            CANCELED_FT_UNITS_VIEW
+        <where>
+            <if test="chargeDateFrom != null">
+                CHARGE_DATE &gt;= #{chargeDateFrom}
+            </if>
+            <if test="chargeDateTo != null">
+                AND CHARGE_DATE &lt;= #{chargeDateTo}
+            </if>
+        </where>
+    </select>
+</mapper>
