@@ -1,5 +1,5 @@
 -- Project Name : CORE_PAYROLL
--- Date/Time    : 2020/03/26 17:09:26
+-- Date/Time    : 2020/04/14 20:30:30
 -- Author       : ASAOKA.TAKUMI
 -- RDBMS Type   : Oracle Database
 -- Application  : A5:SQL Mk-2
@@ -37,6 +37,24 @@ create table CHARGE_REQUEST_STATUS (
 )
 /
 
+create table COMPANY_NOTIFICATION_TAGS (
+  COMPANY_NOTIFICATION_ID NUMBER not null
+  , TAG_ID NUMBER not null
+  , constraint COMPANY_NOTIFICATION_TAGS_PKC primary key (COMPANY_NOTIFICATION_ID,TAG_ID)
+)
+/
+
+create table COMPANY_NOTIFICATIONS (
+  COMPANY_NOTIFICATION_ID NUMBER not null
+  , TITLE NVARCHAR2(100) not null
+  , CONTENT NVARCHAR2(100) not null
+  , NOTIFICATION_DATE TIMESTAMP not null
+  , COMPANY_ID NUMBER not null
+  , NOTIFICATION_TEMPLATE_ID NUMBER not null
+  , constraint COMPANY_NOTIFICATIONS_PKC primary key (COMPANY_NOTIFICATION_ID)
+)
+/
+
 create table CONTRACTS (
   COMPANY_ID NUMBER not null
   , FT_COMPANY_ID NUMBER not null
@@ -54,11 +72,27 @@ create table EMPLOYEE_ACCOUNTS (
 )
 /
 
+create table FEDAULT_TAGS (
+  TAG_ID NUMBER not null
+  , NOTIFICATION_TEMPLATE_ID NUMBER not null
+  , constraint FEDAULT_TAGS_PKC primary key (TAG_ID,NOTIFICATION_TEMPLATE_ID)
+)
+/
+
+create table FT_COMPANY_NOTIFICATION_TAGS (
+  FT_COMPANY_NOTIFICATION_ID NUMBER not null
+  , TAG_ID NUMBER not null
+  , constraint FT_COMPANY_NOTIFICATION_TAGS_PKC primary key (FT_COMPANY_NOTIFICATION_ID,TAG_ID)
+)
+/
+
 create table FT_COMPANY_NOTIFICATIONS (
   FT_COMPANY_NOTIFICATION_ID NUMBER not null
   , TITLE NVARCHAR2(100) not null
+  , CONTENT NVARCHAR2(100) not null
   , NOTIFICATION_DATE TIMESTAMP not null
   , FT_COMPANY_ID NUMBER not null
+  , NOTIFICATION_TEMPLATE_ID NUMBER not null
   , constraint FT_COMPANY_NOTIFICATIONS_PKC primary key (FT_COMPANY_NOTIFICATION_ID)
 )
 /
@@ -89,7 +123,8 @@ create table MQ_COMPANIES (
 
 create table NOTIFICATION_TEMPLATES (
   NOTIFICATION_TEMPLATE_ID NUMBER not null
-  , NOTIFICATION_TEMPLATE NVARCHAR2(100) not null
+  , NOTIFICATION_TITLE_TEMPLATE NVARCHAR2(100) not null
+  , NOTIFICATION_CONTENT_TEMPLATE NVARCHAR2(100) not null
   , constraint NOTIFICATION_TEMPLATES_PKC primary key (NOTIFICATION_TEMPLATE_ID)
 )
 /
@@ -124,6 +159,13 @@ create table REPRESENTATIVES (
   , REPRESENTATIVE_NAME VARCHAR2(100) not null
   , COMPANY_ID NUMBER not null
   , constraint REPRESENTATIVES_PKC primary key (REPRESENTATIVE_ID)
+)
+/
+
+create table TAGS (
+  TAG_ID NUMBER not null
+  , TAG_LABEL NVARCHAR2(100) not null
+  , constraint TAGS_PKC primary key (TAG_ID)
 )
 /
 
