@@ -1,6 +1,5 @@
 package com.payroll.web.adapter.persistence.mapper
 
-import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitStatus
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Param
@@ -13,12 +12,17 @@ import java.time.LocalDateTime
 @Mapper
 interface NotCanceledFundTransferUnitsViewMapper {
 
-    fun selectCANCELED_FT_UNITS(id: Long): CANCELED_FT_UNITS?
+    fun selectNOT_CANCELED_FT_UNITS_VIEW_byId(id: Long): NOT_CANCELED_FT_UNITS_VIEW?
 
-    fun insertCANCELED_FT_UNITS(
-            @Param("fundTransferUnitId") fundTransferUnitId: FundTransferUnitId,
-            @Param("canceledDate") canceledDate: LocalDateTime
-    )
+    fun selectNOT_CANCELED_FT_UNITS_VIEW_byStatus_where_latest(status: FundTransferUnitStatus): List<NOT_CANCELED_FT_UNITS_VIEW>
+
+    fun selectNOT_CANCELED_FT_UNITS_VIEW_byCompanyId(companyId: Long): List<NOT_CANCELED_FT_UNITS_VIEW>
+
+    fun selectNOT_CANCELED_FT_UNITS_VIEW_bySearchCriteria(
+            @Param("chargeDateFrom") chargeDateFrom: LocalDate?,
+            @Param("chargeDateTo") chargeDateTo: LocalDate?,
+            @Param("fundTransferUnitStatus") fundTransferUnitStatus: FundTransferUnitStatus?
+    ): List<NOT_CANCELED_FT_UNITS_VIEW>
 
 }
 

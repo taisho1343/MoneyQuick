@@ -20,5 +20,4 @@ data class REPRESENTATIVES(
         val representativeId: Long,
         val representativeName: String,
         val companyId: Long
-
 )
