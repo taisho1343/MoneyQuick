@@ -1,7 +1,5 @@
 package com.payroll.web.adapter.persistence.mapper
 
-import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
-import com.payroll.web.central.command.domain.model.fundtransferunit.chargerequest.ChargeRequest
 import com.payroll.web.central.command.domain.model.fundtransferunit.chargerequest.ChargeRequestStatus
 import com.payroll.web.central.command.domain.type.Money
 import org.apache.ibatis.annotations.Mapper
@@ -14,7 +12,14 @@ import java.time.LocalDateTime
 @Mapper
 interface ChargeRequestsViewMapper {
 
+    fun selectCHARGE_REQUESTS_VIEW_byId(id: Long): CHARGE_REQUESTS_VIEW?
+
     fun selectCHARGE_REQUESTS_VIEW_byFundTransferUnitId(fundTransferUnitId: Long): List<CHARGE_REQUESTS_VIEW>
+
+    fun selectCHARGE_REQUESTS_byStatusAndFundTransferUnitId(
+            @Param("chargeRequestStatus") chargeRequestStatus: ChargeRequestStatus,
+            @Param("fundTransferUnitId") fundTransferUnitId: Long
+    ): List<CHARGE_REQUESTS_VIEW>
 
 }
 
