@@ -4,6 +4,22 @@
         "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestsViewMapper">
     <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectCHARGE_REQUESTS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS_VIEW">
+        SELECT
+            CHARGE_REQUEST_ID,
+            FT_UNIT_ID,
+            TRANSFER_AMOUNT_OF_MONEY,
+            ACCOUNT_HOLDER,
+            FINANCIAL_INSTITUTION_CODE,
+            TYPE_NUMBER,
+            ACCOUNT_NUMBER,
+            CHARGE_REQUEST_STATUS,
+            UPDATE_DATE
+        FROM
+            CHARGE_REQUESTS_VIEW
+        WHERE
+            CHARGE_REQUEST_ID = #{id}
+    </select>
     <select id="selectCHARGE_REQUESTS_VIEW_byFundTransferUnitId"
             resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS_VIEW">
         SELECT
@@ -20,5 +36,23 @@
             CHARGE_REQUESTS_VIEW
         WHERE
             FT_UNIT_ID = #{fundTransferUnitId}
+    </select>
+    <select id="selectCHARGE_REQUESTS_byStatusAndFundTransferUnitId"
+            resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS_VIEW">
+        SELECT
+            CHARGE_REQUEST_ID,
+            FT_UNIT_ID,
+            TRANSFER_AMOUNT_OF_MONEY,
+            ACCOUNT_HOLDER,
+            FINANCIAL_INSTITUTION_CODE,
+            TYPE_NUMBER,
+            ACCOUNT_NUMBER,
+            CHARGE_REQUEST_STATUS,
+            UPDATE_DATE
+        FROM
+            CHARGE_REQUESTS_VIEW
+        WHERE
+            FT_UNIT_ID = #{fundTransferUnitId}
+            AND CHARGE_REQUEST_STATUS = #{chargeRequestStatus}
     </select>
 </mapper>

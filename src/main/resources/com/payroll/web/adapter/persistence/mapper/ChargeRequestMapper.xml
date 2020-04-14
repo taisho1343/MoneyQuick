@@ -10,6 +10,20 @@
         FROM
             DUAL
     </select>
+    <select id="selectCHARGE_REQUESTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS">
+        SELECT
+            CHARGE_REQUEST_ID,
+            FT_UNIT_ID,
+            TRANSFER_AMOUNT_OF_MONEY,
+            ACCOUNT_HOLDER,
+            FINANCIAL_INSTITUTION_CODE,
+            TYPE_NUMBER,
+            ACCOUNT_NUMBER
+        FROM
+            CHARGE_REQUESTS
+        WHERE
+            FT_UNIT_ID = #{fundTransferUnitId}
+    </select>
     <insert id="insertCHARGE_REQUESTS">
         INSERT INTO
             CHARGE_REQUESTS (
@@ -31,4 +45,17 @@
             #{chargeRequest.accountForRequest.account.accountNumber.rawNumber}
         )
     </insert>
+    <update id="updateCHARGE_REQUESTS">
+        UPDATE
+            CHARGE_REQUESTS
+        SET
+            FT_UNIT_ID = #{fundTransferUnitId.rawId},
+            TRANSFER_AMOUNT_OF_MONEY = #{chargeRequest.transferAmountOfMoney},
+            ACCOUNT_HOLDER = #{chargeRequest.accountForRequest.accountHolder.name},
+            FINANCIAL_INSTITUTION_CODE = #{chargeRequest.accountForRequest.account.financialInstitutionCode.rawCode},
+            TYPE_NUMBER = #{chargeRequest.accountForRequest.account.typeNumber.rawNumber},
+            ACCOUNT_NUMBER = #{chargeRequest.accountForRequest.account.accountNumber.rawNumber}
+        WHERE
+            CHARGE_REQUEST_ID = #{chargeRequest.chargeRequestId.rawId}
+    </update>
 </mapper>

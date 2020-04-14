@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.FundTransferCompanyMapper">
+    <select id="selectFT_COMPANIES_ById" resultType="com.payroll.web.adapter.persistence.mapper.FT_COMPANIES">
+        SELECT
+            FT_COMPANY_ID,
+            FT_COMPANY_NUMBER,
+            FT_COMPANY_NAME
+        FROM
+            FT_COMPANIES
+        WHERE
+            FT_COMPANY_ID = #{id}
+    </select>
+    <insert id="insertFT_COMPANIES">
+        INSERT INTO
+            FT_COMPANIES (
+                FT_COMPANY_ID,
+                FT_COMPANY_NUMBER,
+                FT_COMPANY_NAME
+            )
+        VALUES (
+            #{fundTransferCompanyId.rawId},
+            #{fundTransferCompanyNumber.rawNumber},
+            #{fundTransferCompanyName.rawName}
+        )
+    </insert>
+</mapper>

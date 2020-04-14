@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.CompanyNotificationTagMapper">
+    <select id="selectCOMPANY_NOTIFICATION_TAGS_byCompanyNotificationId"
+            resultType="com.payroll.web.adapter.persistence.mapper.COMPANY_NOTIFICATION_TAGS">
+        SELECT
+            COMPANY_NOTIFICATION_ID,
+            TAG_ID
+        FROM
+            COMPANY_NOTIFICATION_TAGS
+        WHERE
+            COMPANY_NOTIFICATION_ID = #{companyNotificationId}
+    </select>
+    <insert id="insertCOMPANY_NOTIFICATION_TAGS">
+        INSERT INTO
+            COMPANY_NOTIFICATION_TAGS (
+                COMPANY_NOTIFICATION_ID,
+                TAG_ID
+            )
+        VALUES (
+            #{companyNotificationId},
+            #{tagId}
+        )
+    </insert>
+</mapper>

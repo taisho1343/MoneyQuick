@@ -3,6 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestStatusMapper">
+    <select id="selectCHARGE_REQUEST_STATUS_byId_where_latest" resultMap="chargeRequestStatusMap">
+        SELECT
+            CHARGE_REQUEST_ID,
+            CHARGE_REQUEST_STATUS,
+            UPDATE_DATE
+        FROM
+            CHARGE_REQUEST_STATUS
+        WHERE
+            CHARGE_REQUEST_ID = #{id}
+        ORDER BY UPDATE_DATE DESC
+        FETCH FIRST 1 ROWS ONLY
+    </select>
     <insert id="insertCHARGE_REQUEST_STATUS">
         INSERT INTO
             CHARGE_REQUEST_STATUS (
@@ -16,4 +28,12 @@
             #{updateDate}
         )
     </insert>
+    <resultMap id="chargeRequestStatusMap" type="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUEST_STATUS">
+        <constructor>
+            <idArg column="CHARGE_REQUEST_ID" name="chargeRequestId"/>
+            <arg column="CHARGE_REQUEST_STATUS" name="chargeRequestStatus"
+                 javaType="com.payroll.web.central.command.domain.model.fundtransferunit.chargerequest.ChargeRequestStatus"/>
+            <arg column="UPDATE_DATE" name="updateDate"/>
+        </constructor>
+    </resultMap>
 </mapper>

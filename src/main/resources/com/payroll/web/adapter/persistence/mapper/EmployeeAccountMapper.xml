@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.EmployeeAccountMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectFINANCIAL_INSTITUTION_CODE_nextval" resultType="string" flushCache="true">
+        SELECT
+            FI_CODE_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectTYPE_NUMBER_nextval" resultType="string" flushCache="true">
+        SELECT
+            TYPE_NUMBER_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectACCOUNT_NUMBER_nextval" resultType="string" flushCache="true">
+        SELECT
+            ACCOUNT_NUMBER_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+</mapper>

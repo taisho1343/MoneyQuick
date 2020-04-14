@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.CompanyNotificationMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectCOM_NOTIFICATION_ID_nextval" resultType="_long" flushCache="true">
+        SELECT
+            COM_NOTIFICATION_ID_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectCOMPANY_NOTIFICATIONS_byCompanyId"
+            resultType="com.payroll.web.adapter.persistence.mapper.COMPANY_NOTIFICATIONS">
+        SELECT
+            COMPANY_NOTIFICATION_ID,
+            TITLE,
+            CONTENT,
+            NOTIFICATION_DATE,
+            COMPANY_ID,
+            NOTIFICATION_TEMPLATE_ID
+        FROM
+            COMPANY_NOTIFICATIONS
+        WHERE
+            COMPANY_ID = #{companyId}
+    </select>
+    <select id="selectCOMPANY_NOTIFICATIONS_byCompanyNotificationId"
+            resultType="com.payroll.web.adapter.persistence.mapper.COMPANY_NOTIFICATIONS">
+        SELECT
+            COMPANY_NOTIFICATION_ID,
+            TITLE,
+            CONTENT,
+            NOTIFICATION_DATE,
+            COMPANY_ID,
+            NOTIFICATION_TEMPLATE_ID
+        FROM
+            COMPANY_NOTIFICATIONS
+        WHERE
+            COMPANY_NOTIFICATION_ID = #{companyNotificationId}
+    </select>
+    <insert id="insertCOMPANY_NOTIFICATIONS">
+        INSERT INTO
+            COMPANY_NOTIFICATIONS (
+                COMPANY_NOTIFICATION_ID,
+                TITLE,
+                CONTENT,
+                NOTIFICATION_DATE,
+                COMPANY_ID,
+                NOTIFICATION_TEMPLATE_ID
+            )
+        VALUES (
+            #{companyNotificationId},
+            #{title},
+            #{content},
+            #{notificationDate},
+            #{companyId},
+            #{notificationTemplateId}
+        )
+    </insert>
+</mapper>
