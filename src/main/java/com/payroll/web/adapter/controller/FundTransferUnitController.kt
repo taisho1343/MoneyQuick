@@ -17,6 +17,7 @@ import com.payroll.web.central.command.domain.type.Money
 import com.payroll.web.central.command.domain.type.account.*
 import com.payroll.web.central.query.model.QueryModelFundTransferUnit
 import com.payroll.web.central.query.repository.QueryRepositoryFundTransferUnit
+import com.payroll.web.central.query.repository.QueryRepositoryNGData
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,7 +32,7 @@ class FundTransferUnitController(
         val addFundTransferUnitApplicationService: AddFundTransferUnitApplicationService,
         val changeFundTransferUnitStatusApplicationService: ChangeFundTransferUnitStatusApplicationService,
         val queryRepositoryFundTransferUnit: QueryRepositoryFundTransferUnit,
-        val changeFundTransferUnitStatusApplicationService: ChangeFundTransferUnitStatusApplicationService
+        val queryRepositoryNGData: QueryRepositoryNGData
 ) {
 
     @PostMapping("{companyId}/fundTransferUnits")
@@ -91,6 +92,12 @@ class FundTransferUnitController(
                 ?: throw QueryModelNotFoundException("not found QueryModel FundTransferUnit by $fundTransferUnitId")
         return ResponseEntity.ok(fundTransferUnit)
     }
+
+    @GetMapping("{companyId}/fundTransferUnits/{fundTransferUnitId}/NGData")
+    fun getNGData(
+            @PathVariable("companyId") companyId: Long,
+            @PathVariable("fundTransferUnitId") fundTransferUnitId: Long
+    ) = queryRepositoryNGData.findQueryModelNGDataByFundTransferUnitId(fundTransferUnitId)
 
     private fun List<ChargeRequestForm>.convertToAddChargeRequestCommands() = map {
         AddChargeRequestCommand(
