@@ -1,0 +1,1044 @@
+swagger: "2.0"
+info:
+  title: MoneyQuick Core Server
+  description: Coreサーバが公開しているAPI<br>
+  version: 0.15.1
+host: localhost:8080
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /companies/{companyId}/fundTransferUnits:
+    post:
+      tags:
+        - Command:FundTransferUnit
+      summary: FTユニットを追加
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: body
+          name: FundTransferUnitToAdd
+          required: true
+          description: FTユニットの追加内容
+          schema:
+            $ref: '#/definitions/FundTransferUnitToAdd'
+      responses:
+        201:
+          description: 成功
+          headers:
+            location:
+              type: string
+              description:
+                FTユニットを取得するURI ( /companies/{companyId}/fundTransferUnits/{fundTransferUnitId} )
+    get:
+      tags:
+        - Query:FundTransferUnit
+      summary: FTユニットを全て取得（削除済みデータは含まれない）
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                fundTransferUnitId:
+                  type: integer
+                  description: Long型
+                fundTransferUnitStatus:
+                  type: string
+                  enum: [READY_TO_DISTRIBUTE, DISTRIBUTED_OK, DISTRIBUTED_HAS_NG, GENERATED_INVOICE, CANCELED]
+                createdAt:
+                  type: string
+                  format: date-time
+                  description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+                chargeDate:
+                  type: string
+                  format: date
+                  description: フォーマット（yyyy-MM-dd）
+                chargeRequestIds:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: integer
+                    description: Long型
+                invoiceStatementId:
+                  type: integer
+                  description: Long型（Nullの可能性有）
+  /companies/{companyId}/fundTransferUnits/{fundTransferUnitId}:
+    get:
+      tags:
+        - Query:FundTransferUnit
+      summary: FTユニットを取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: fundTransferUnitId
+          required: true
+          type: integer
+          description: FTユニットID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              fundTransferUnitId:
+                type: integer
+                description: Long型
+              fundTransferUnitStatus:
+                type: string
+                enum: [READY_TO_DISTRIBUTE, DISTRIBUTED_OK, DISTRIBUTED_HAS_NG, GENERATED_INVOICE, CANCELED]
+              createdAt:
+                type: string
+                format: date-time
+                description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+              chargeDate:
+                type: string
+                format: date
+                description: フォーマット（yyyy-MM-dd）
+              chargeRequestIds:
+                type: array
+                minItems: 1
+                items:
+                  type: integer
+                  description: Long型
+              invoiceStatementId:
+                type: integer
+                description: Long型（Nullの可能性有）
+  /companies/{companyId}/fundTransferUnits/{fundTransferUnitId}/generatedInvoice:
+    put:
+      tags:
+        - Command:FundTransferUnit
+      summary: FTユニットをチャージ可能状態に更新
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: fundTransferUnitId
+          required: true
+          type: integer
+          description: FTユニットID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/FundTransferUnit'
+  /companies/{companyId}/fundTransferUnits/{fundTransferUnitId}/canceled:
+    put:
+      tags:
+        - Command:FundTransferUnit
+      summary: FTユニットをキャンセル状態に更新
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: fundTransferUnitId
+          required: true
+          type: integer
+          description: FTユニットID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/FundTransferUnit'
+  /companies/{companyId}/fundTransferUnits/{fundTransferUnitId}/NGData:
+    get:
+      tags:
+        - Query:FundTransferUnit
+      summary: NGデータ取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: fundTransferUnitId
+          required: true
+          type: integer
+          description: FTユニットID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                transferAmountOfMoney:
+                  type: integer
+                  description: BigDecimal型
+                accountForRequest:
+                  type: object
+                  properties:
+                    accountHolder:
+                      type: string
+                    account:
+                      type: object
+                      properties:
+                        financialInstitutionCode:
+                          type: string
+                        typeNumber:
+                          type: string
+                        accountNumber:
+                          type: string
+  /fundTransferUnitListData:
+    get:
+      tags:
+        - Query:FundTransferUnit
+      summary: FTユニット一覧検索
+      parameters:
+        - in: query
+          name: chargeDateFrom
+          required: false
+          type: string
+          format: date
+          description: フォーマット（yyyy-MM-dd）：この日以降の支給日を持つFTユニットを検索します。
+        - in: query
+          name: chargeDateTo
+          required: false
+          type: string
+          format: date
+          description: フォーマット（yyyy-MM-dd）：この日以前の支給日を持つFTユニットを検索します。
+        - in: query
+          name: status
+          required: false
+          type: string
+          enum: [READY_TO_DISTRIBUTE, DISTRIBUTED_OK, DISTRIBUTED_HAS_NG, GENERATED_INVOICE, CANCELED]
+          description: 指定されたステータスを持つFTユニットを検索します。
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              fundTransferUnitId:
+                type: integer
+                description: Long型
+              fundTransferUnitStatus:
+                type: string
+                enum: [READY_TO_DISTRIBUTE, DISTRIBUTED_OK, DISTRIBUTED_HAS_NG, GENERATED_INVOICE, CANCELED]
+              createdAt:
+                type: string
+                format: date-time
+                description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+              chargeDate:
+                type: string
+                format: date
+                description: フォーマット（yyyy-MM-dd）
+              chargeRequestIds:
+                type: array
+                minItems: 1
+                items:
+                  type: integer
+                  description: Long型
+              companyId:
+                type: integer
+                description: Long型
+              companyName:
+                type: string
+              invoiceStatementId:
+                type: integer
+                description: Long型（Nullの可能性有）
+  /invoiceStatements/{invoiceStatementId}/paid:
+    put:
+      tags:
+        - Command:InvoiceStatement
+      summary: 入金ステータスを入金済みへ変更（要求）
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/InvoiceStatement'
+  /invoiceStatements/{invoiceStatementId}/unjust:
+    put:
+      tags:
+        - Command:InvoiceStatement
+      summary: 入金ステータスを金額違いへ変更（要求）
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/InvoiceStatement'
+  /invoiceStatements/{invoiceStatementId}/expired:
+    put:
+      tags:
+        - Command:InvoiceStatement
+      summary: 入金ステータスを期限切れへ変更（要求）
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/InvoiceStatement'
+  /invoiceStatements/{invoiceStatementId}/unknown:
+    put:
+      tags:
+        - Command:InvoiceStatement
+      summary: 入金ステータスを特定不可へ変更（要求）
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/InvoiceStatement'
+  /invoiceStatements/{invoiceStatementId}/approvePaymentStatus:
+    put:
+      tags:
+        - Command:InvoiceStatement
+      summary: 入金ステータスの変更要求を承認
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            $ref: '#/definitions/InvoiceStatement'
+  /invoiceStatements/{invoiceStatementId}:
+    get:
+      tags:
+        - Query:InvoiceStatement
+      summary: 請求情報取得
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              invoiceStatementId:
+                type: integer
+                description: Long型
+              invoiceNumber:
+                type: string
+              billingStatus:
+                type: string
+                enum: [BEFORE, BILLING]
+              paymentStatus:
+                type: string
+                enum: [UNCHECKED, PAID, UNJUST, EXPIRED, UNKNOWN]
+              paymentStatusChangeRequest:
+                type: string
+                enum: [NONE, PAID, UNJUST, EXPIRED, UNKNOWN]
+              paymentDeadline:
+                type: string
+                format: date
+                description: フォーマット（yyyy-MM-dd）
+              chargeOrders:
+                type: array
+                minItems: 0
+                items:
+                  type: object
+                  properties:
+                    chargeOrderId:
+                      type: integer
+                      description: Long型
+                    chargeMoney:
+                      type: integer
+                      description: BigDecimal型
+                    FundTransferCompanyId:
+                      type: integer
+                      description: Long型
+  /invoiceStatements/{invoiceStatementId}/invoiceDate:
+    get:
+      tags:
+        - Query:InvoiceStatement
+      summary: 請求書発行日を取得
+      parameters:
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              invoiceDate:
+                type: string
+                format: date-time
+                description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+  /fundTransferCompanies/{fundTransferCompanyId}/invoiceStatementLists:
+    get:
+      tags:
+        - Query:InvoiceStatement
+      summary: 指定した資金移動業者に関する請求の一覧を取得
+      parameters:
+        - in: path
+          name: fundTransferCompanyId
+          required: true
+          type: integer
+          description: 資金移動業者ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                invoiceStatementId:
+                  type: integer
+                  description: Long型
+                invoiceDate:
+                  type: string
+                  format: date-time
+                  description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+                companyId:
+                  type: integer
+                  description: Long型
+                companyName:
+                  type: string
+                chargeDate:
+                  type: string
+                  format: date
+                  description: フォーマット（yyyy-MM-dd）
+                invoiceMoney:
+                  type: integer
+                  description: BigDecimal型
+                  minimum: 1
+  /fundTransferCompanies/{fundTransferCompanyId}/invoiceTranscripts/{invoiceStatementId}:
+    get:
+      tags:
+        - Query:InvoiceStatement
+      summary: 資金移動業者向けに、指定した請求データの請求書写しを取得
+      parameters:
+        - in: path
+          name: fundTransferCompanyId
+          required: true
+          type: integer
+          description: 資金移動業者ID
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              invoiceStatement:
+                type: object
+                properties:
+                  invoiceStatementId:
+                    type: integer
+                    description: Long型
+                  invoiceNumber:
+                    type: string
+                  invoiceDate:
+                    type: string
+                    format: date-time
+                    description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+                  paymentDeadline:
+                    type: string
+                    format: date
+                    description: フォーマット（yyyy-MM-dd）
+                  invoiceDetails:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        fundTransferCompanyId:
+                          type: integer
+                          description: Long型
+                        fundTransferCompanyName:
+                          type: string
+                        fundTransferCompanyNumber:
+                          type: string
+                        invoiceMoney:
+                          type: integer
+                          description: BigDecimal型
+                          minimum: 1
+              company:
+                type: object
+                properties:
+                  companyId:
+                    type: integer
+                    description: Long型
+                  companyName:
+                    type: string
+                  representatives:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+              moneyQuickCompany:
+                type: object
+                properties:
+                  companyName:
+                    type: string
+                  postalCode:
+                    type: string
+                  address:
+                    type: string
+                  phoneNumber:
+                    type: string
+                  bank:
+                    type: object
+                    properties:
+                      bankName:
+                        type: string
+                      branchName:
+                        type: string
+                      accountType:
+                        type: string
+                        enum: [SAVINGS_ACCOUNT, CHECKING_ACCOUNT]
+                      accountHolder:
+                        type: string
+                      account:
+                        type: object
+                        properties:
+                          financialInstitutionCode:
+                            type: string
+                          typeNumber:
+                            type: string
+                          accountNumber:
+                            type: string
+  /companies/{companyId}/invoiceStatements/{invoiceStatementId}/receipts:
+    get:
+      tags:
+        - Query:InvoiceStatement
+      summary: 受領書を取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: invoiceStatementId
+          required: true
+          type: integer
+          description: 請求データID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              invoiceStatementId:
+                type: integer
+                description: Long型
+              invoiceNumber:
+                type: string
+              invoiceDate:
+                type: string
+                format: date
+                description: フォーマット（yyyy-MM-dd）
+              receiptDetails:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  properties:
+                    fundTransferCompanyId:
+                      type: integer
+                      description: Long型
+                    fundTransferCompanyName:
+                      type: string
+                    fundTransferCompanyNumber:
+                      type: string
+                    chargeMoneyForEachEmployees:
+                      type: array
+                      minItems: 1
+                      items:
+                        type: object
+                        properties:
+                          employeeId:
+                            type: integer
+                            description: Long型
+                          accountHolder:
+                            type: string
+                          chargeMoney:
+                            type: integer
+                            description: BigDecimal型
+                            minimum: 1
+              company:
+                type: object
+                properties:
+                  companyId:
+                    type: integer
+                    description: Long型
+                  companyName:
+                    type: string
+                  representatives:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+              moneyQuickCompany:
+                type: object
+                properties:
+                  companyName:
+                    type: string
+                  postalCode:
+                    type: string
+                  address:
+                    type: string
+                  phoneNumber:
+                    type: string
+  /chargeableChargeOrders:
+    get:
+      tags:
+        - Query:ChargeOrder
+      summary: チャージの実行が可能なChargeオーダーをすべて取得
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                chargeOrderId:
+                  type: integer
+                  description: Long型
+                payrollCardId:
+                  type: integer
+                  description: Long型
+                chargeMoney:
+                  type: integer
+                  description: BigDecimal
+  /companies/{companyId}:
+    get:
+      tags:
+        - Query:Company
+      summary: 企業情報取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              companyId:
+                type: integer
+                description: Long型
+              companyName:
+                type: string
+              representatives:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+  /fundTransferCompanies/{fundTransferCompanyId}/companies:
+    get:
+      tags:
+        - Query:Company
+      summary: 指定した資金移動業者と契約が成立している企業を全て取得
+      parameters:
+        - in: path
+          name: fundTransferCompanyId
+          required: true
+          type: integer
+          description: 資金移動業者ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                companyId:
+                  type: integer
+                  description: Long型
+                companyName:
+                  type: string
+                postalCode:
+                  type: string
+                address:
+                  type: string
+                representatives:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+  /moneyQuickCompanies:
+    get:
+      tags:
+        - Query:MoneyQuickCompany
+      summary: MoneyQuickを運営する企業の情報を取得
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              companyName:
+                type: string
+              postalCode:
+                type: string
+              address:
+                type: string
+              phoneNumber:
+                type: string
+              bank:
+                type: object
+                properties:
+                  bankName:
+                    type: string
+                  branchName:
+                    type: string
+                  accountType:
+                    type: string
+                    enum: [SAVINGS_ACCOUNT, CHECKING_ACCOUNT]
+                  accountHolder:
+                    type: string
+                  account:
+                    type: "object"
+                    properties:
+                      financialInstitutionCode:
+                        type: string
+                      typeNumber:
+                        type: string
+                      accountNumber:
+                        type: string
+  /fundTransferCompanies/{fundTransferCompanyId}:
+    get:
+      tags:
+        - Query:FundTransferCompany
+      summary: 資金移動業者情報取得
+      parameters:
+        - in: path
+          name: fundTransferCompanyId
+          required: true
+          type: integer
+          description: 資金移動業者ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              fundTransferCompanyId:
+                type: integer
+                description: Long型
+              fundTransferCompanyName:
+                type: string
+              fundTransferCompanyNumber:
+                type: string
+  /fundTransferCompanies/{fundTransferCompanyId}/notifications:
+    get:
+      tags:
+        - Query:Notification
+      summary: 指定した資金移動業者向けのお知らせを全て取得
+      parameters:
+        - in: path
+          name: fundTransferCompanyId
+          required: true
+          type: integer
+          description: 資金移動業者ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                notificationId:
+                  type: integer
+                  description: Long型
+                notificationDate:
+                  type: string
+                  format: date
+                  description: フォーマット（yyyy-MM-dd）
+                title:
+                  type: string
+  /companies/{companyId}/notifications:
+    get:
+      tags:
+        - Query:Notification
+      summary: 指定した企業向けのお知らせを全て取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: array
+            minItems: 0
+            items:
+              type: object
+              properties:
+                notificationId:
+                  type: integer
+                  description: Long型
+                notificationDate:
+                  type: string
+                  format: date
+                  description: フォーマット（yyyy-MM-dd）
+                title:
+                  type: string
+                tags:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+  /companies/{companyId}/notifications/{notificationId}:
+    get:
+      tags:
+        - Query:Notification
+      summary: 指定したお知らせの詳細を取得
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: path
+          name: notificaitonId
+          required: true
+          type: integer
+          description: お知らせID
+      responses:
+        200:
+          description: 成功
+          schema:
+            type: object
+            properties:
+              notificationId:
+                type: integer
+                description: Long型
+              notificationDate:
+                type: string
+                format: date
+                description: フォーマット（yyyy-MM-dd）
+              title:
+                type: string
+              content:
+                type: string
+              tags:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+  /companies/{companyId}/employees:
+    post:
+      tags:
+        - Command:Employee
+      summary: 従業員情報のアップロード
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          type: integer
+          description: 企業ID
+        - in: body
+          name: EmployeeToAdd
+          required: true
+          description: アップロードされる従業員情報
+          schema:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              properties:
+                employeeNumber:
+                  type: string
+                name:
+                  type: string
+                kanaName:
+                  type: string
+                mailAddress:
+                  type: string
+                phoneNumber:
+                  type: string
+                birthdate:
+                  type: string
+                  format: date
+                  description: フォーマット（yyyy-MM-dd）
+                accountType:
+                  type: string
+                  enum: [SAVINGS_ACCOUNT, CHECKING_ACCOUNT]
+                bankCode:
+                  type: string
+                branchCode:
+                  type: string
+                accountNumber:
+                  type: string
+      responses:
+        201:
+          description: 成功
+          headers:
+            location:
+              type: string
+              description: coming soon
+
+definitions:
+  FundTransferUnitToAdd:
+    type: object
+    properties:
+      chargeDate:
+        type: string
+        format: date
+        description: フォーマット（yyyy-MM-dd）
+      chargeRequests:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/definitions/ChargeRequestToAdd'
+  ChargeRequestToAdd:
+    type: object
+    properties:
+      transferAmountOfMoney:
+        type: integer
+        description: BigDecimal型
+        minimum: 0
+      accountForRequest:
+        $ref: '#/definitions/AccountForRequest'
+  AccountForRequest:
+    type: object
+    properties:
+      accountHolder:
+        type: string
+      account:
+        $ref: '#/definitions/Account'
+  Account:
+    type: "object"
+    properties:
+      financialInstitutionCode:
+        type: string
+      typeNumber:
+        type: string
+      accountNumber:
+        type: string
+  FundTransferUnit:
+    type: object
+    properties:
+      fundTransferUnitId:
+        type: integer
+        description: Long型
+      fundTransferUnitStatus:
+        type: string
+        enum: [READY_TO_DISTRIBUTE, DISTRIBUTED_OK, DISTRIBUTED_HAS_NG, GENERATED_INVOICE, CANCELED]
+      createdAt:
+        type: string
+        format: date-time
+        description: フォーマット（yyyy-MM-dd'T'HH:mm:ss）
+      chargeDate:
+        type: string
+        format: date
+        description: フォーマット（yyyy-MM-dd）
+      chargeRequestIds:
+        type: array
+        minItems: 1
+        items:
+          type: integer
+          description: Long型
+      invoiceStatementId:
+        type: integer
+        description: Long型（Nullの可能性有）
+  InvoiceStatement:
+    type: object
+    properties:
+      invoiceStatementId:
+        type: integer
+        description: Long型
+      invoiceNumber:
+        type: string
+      billingStatus:
+        type: string
+        enum: [BEFORE, BILLING]
+      paymentStatus:
+        type: string
+        enum: [UNCHECKED, PAID, UNJUST, EXPIRED, UNKNOWN]
+      paymentStatusChangeRequest:
+        type: string
+        enum: [NONE, PAID, UNJUST, EXPIRED, UNKNOWN]
+      paymentDeadline:
+        type: string
+        format: date
+        description: フォーマット（yyyy-MM-dd）
+      chargeOrders:
+        type: array
+        minItems: 0
+        items:
+          $ref: '#/definitions/ChargeOrder'
+  ChargeOrder:
+    type: object
+    properties:
+      chargeOrderId:
+        type: integer
+        description: Long型
+      chargeMoney:
+        type: integer
+        description: BigDecimal型
+      FundTransferCompanyId:
+        type: integer
+        description: Long型
