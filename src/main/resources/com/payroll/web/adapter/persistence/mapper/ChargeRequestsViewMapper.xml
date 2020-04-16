@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestsViewMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectCHARGE_REQUESTS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS_VIEW">

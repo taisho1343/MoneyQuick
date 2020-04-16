@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.FundTransferUnitStatusMapper">
     <select id="selectFT_UNIT_STATUS_byId_where_latest" resultType="com.payroll.web.adapter.persistence.mapper.FT_UNIT_STATUS">
         SELECT
