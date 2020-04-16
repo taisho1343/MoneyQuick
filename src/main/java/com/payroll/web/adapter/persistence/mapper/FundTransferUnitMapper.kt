@@ -16,12 +16,17 @@ interface FundTransferUnitMapper {
 
     fun selectFT_UNITS_byId(id: Long): FT_UNITS?
 
-    fun selectFT_UNITS(): List<FT_UNITS>
+    fun selectFT_UNITS_bySearchCriteria(
+            @Param("chargeDateFrom") chargeDateFrom: LocalDate?,
+            @Param("chargeDateTo") chargeDateTo: LocalDate?
+    ): List<FT_UNITS>
 
     fun insertFT_UNITS(
             @Param("fundTransferUnit") fundTransferUnit: FundTransferUnit,
             @Param("createdDate") createdDate: LocalDateTime
     )
+
+    fun updateFT_UNITS(fundTransferUnit: FundTransferUnit)
 
 }
 
