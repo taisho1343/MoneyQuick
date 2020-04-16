@@ -1,4 +1,4 @@
-package com.payroll.web.adapter.persistence.mapper
+package com.payroll.web.adapter.persistence.mapper.fundtransferunit
 
 import com.payroll.web.central.command.domain.model.fundtransferunit.chargerequest.ChargeRequestStatus
 import com.payroll.web.central.command.domain.type.Money

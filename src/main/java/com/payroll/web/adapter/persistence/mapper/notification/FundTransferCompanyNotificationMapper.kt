@@ -1,4 +1,4 @@
-package com.payroll.web.adapter.persistence.mapper
+package com.payroll.web.adapter.persistence.mapper.notification
 
 import org.apache.ibatis.annotations.Mapper
 import org.springframework.stereotype.Component

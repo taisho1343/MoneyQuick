@@ -1,4 +1,4 @@
-package com.payroll.web.adapter.persistence.mapper
+package com.payroll.web.adapter.persistence.mapper.fundtransferunit
 
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
 import org.apache.ibatis.annotations.Mapper

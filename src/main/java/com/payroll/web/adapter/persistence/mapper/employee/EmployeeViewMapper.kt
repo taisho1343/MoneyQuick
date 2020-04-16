@@ -1,4 +1,4 @@
-package com.payroll.web.adapter.persistence.mapper
+package com.payroll.web.adapter.persistence.mapper.employee
 
 import com.payroll.web.central.command.domain.model.employee.EnabledEmployeeAccount
 import org.apache.ibatis.annotations.Mapper

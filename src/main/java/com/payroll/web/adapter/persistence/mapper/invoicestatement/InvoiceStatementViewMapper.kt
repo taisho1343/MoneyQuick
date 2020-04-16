@@ -1,4 +1,4 @@
-package com.payroll.web.adapter.persistence.mapper
+package com.payroll.web.adapter.persistence.mapper.invoicestatement
 
 import com.payroll.web.central.command.domain.model.invoicestatement.BillingStatus
 import com.payroll.web.central.command.domain.model.invoicestatement.PaymentStatus
