@@ -1,6 +1,6 @@
 package com.payroll.web.adapter.persistence.generator
 
-import com.payroll.web.adapter.persistence.mapper.FundTransferUnitMapper
+import com.payroll.web.adapter.persistence.mapper.fundtransferunit.FundTransferUnitMapper
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitIdGenerator
 import org.springframework.stereotype.Component

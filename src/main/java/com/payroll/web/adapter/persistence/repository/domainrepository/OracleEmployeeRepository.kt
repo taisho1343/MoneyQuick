@@ -1,9 +1,9 @@
 package com.payroll.web.adapter.persistence.repository.domainrepository
 
-import com.payroll.web.adapter.persistence.mapper.EMPLOYEES_VIEW
-import com.payroll.web.adapter.persistence.mapper.EmployeeViewMapper
-import com.payroll.web.adapter.persistence.mapper.PAYROLL_CARDS
-import com.payroll.web.adapter.persistence.mapper.PayrollCardMapper
+import com.payroll.web.adapter.persistence.mapper.employee.EMPLOYEES_VIEW
+import com.payroll.web.adapter.persistence.mapper.employee.EmployeeViewMapper
+import com.payroll.web.adapter.persistence.mapper.employee.PAYROLL_CARDS
+import com.payroll.web.adapter.persistence.mapper.employee.PayrollCardMapper
 import com.payroll.web.central.command.domain.model.employee.Employee
 import com.payroll.web.central.command.domain.model.employee.EmployeeId
 import com.payroll.web.central.command.domain.model.employee.EmployeeRepository

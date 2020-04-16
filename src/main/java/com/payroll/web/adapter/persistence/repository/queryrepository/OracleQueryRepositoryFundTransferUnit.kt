@@ -1,7 +1,8 @@
 package com.payroll.web.adapter.persistence.repository.queryrepository
 
 
-import com.payroll.web.adapter.persistence.mapper.*
+import com.payroll.web.adapter.persistence.mapper.fundtransferunit.*
+import com.payroll.web.adapter.persistence.mapper.invoicestatement.InvoiceStatementMapper
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitStatus
 import com.payroll.web.central.query.model.QueryModelChargeRequest
 import com.payroll.web.central.query.model.QueryModelFundTransferUnit
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class OracleQueryRepositoryFundTransferUnit(
         val fundTransferUnitMapper: FundTransferUnitMapper,
+        val notCanceledFundTransferUnitsViewMapper: NotCanceledFundTransferUnitsViewMapper,
         val canceledFundTransferUnitMapper: CanceledFundTransferUnitMapper,
         val fundTransferUnitStatusMapper: FundTransferUnitStatusMapper,
         val chargeRequestsViewMapper: ChargeRequestsViewMapper,
@@ -18,7 +20,7 @@ class OracleQueryRepositoryFundTransferUnit(
 ) : QueryRepositoryFundTransferUnit {
 
     override fun findAllQueryModelFundTransferUnits(companyId: Long): List<QueryModelFundTransferUnit> {
-        return fundTransferUnitMapper.selectFT_UNITS().map {
+        return notCanceledFundTransferUnitsViewMapper.selectNOT_CANCELED_FT_UNITS_VIEW_byCompanyId(companyId).map {
             QueryModelFundTransferUnit(
                     it.ftUnitId,
                     it.companyId,

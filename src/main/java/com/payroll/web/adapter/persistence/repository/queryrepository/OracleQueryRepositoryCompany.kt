@@ -1,9 +1,9 @@
 package com.payroll.web.adapter.persistence.repository.queryrepository
 
 
-import com.payroll.web.adapter.persistence.mapper.RepresentativeMapper
-import com.payroll.web.adapter.persistence.mapper.COMPANIES
-import com.payroll.web.adapter.persistence.mapper.CompanyMapper
+import com.payroll.web.adapter.persistence.mapper.company.COMPANIES
+import com.payroll.web.adapter.persistence.mapper.company.CompanyMapper
+import com.payroll.web.adapter.persistence.mapper.company.RepresentativeMapper
 import com.payroll.web.central.query.model.QueryModelCompany
 import com.payroll.web.central.query.repository.QueryRepositoryCompany
 import org.springframework.stereotype.Repository

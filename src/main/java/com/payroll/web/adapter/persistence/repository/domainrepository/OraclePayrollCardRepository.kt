@@ -1,6 +1,6 @@
 package com.payroll.web.adapter.persistence.repository.domainrepository
 
-import com.payroll.web.adapter.persistence.mapper.PayrollCardMapper
+import com.payroll.web.adapter.persistence.mapper.employee.PayrollCardMapper
 import com.payroll.web.central.command.domain.model.fundtransfercompany.FundTransferCompanyId
 import com.payroll.web.central.command.domain.model.payrollcard.CardLabel
 import com.payroll.web.central.command.domain.model.payrollcard.PayrollCard

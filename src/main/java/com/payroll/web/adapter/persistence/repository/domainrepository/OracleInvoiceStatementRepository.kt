@@ -1,6 +1,6 @@
 package com.payroll.web.adapter.persistence.repository.domainrepository
 
-import com.payroll.web.adapter.persistence.mapper.*
+import com.payroll.web.adapter.persistence.mapper.invoicestatement.*
 import com.payroll.web.central.command.domain.model.fundtransfercompany.FundTransferCompanyId
 import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
 import com.payroll.web.central.command.domain.model.invoicestatement.*
