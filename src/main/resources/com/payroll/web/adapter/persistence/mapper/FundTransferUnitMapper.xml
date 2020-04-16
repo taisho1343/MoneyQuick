@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.FundTransferUnitMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectFT_UNIT_ID_nextval" resultType="_long" flushCache="true">
@@ -21,7 +21,7 @@
         WHERE
             FT_UNIT_ID = #{id}
     </select>
-    <select id="selectFT_UNITS" resultType="com.payroll.web.adapter.persistence.mapper.FT_UNITS">
+    <select id="selectFT_UNITS_bySearchCriteria" resultType="com.payroll.web.adapter.persistence.mapper.FT_UNITS">
         SELECT
             FT_UNIT_ID,
             CHARGE_DATE,
@@ -29,6 +29,14 @@
             COMPANY_ID
         FROM
             FT_UNITS
+        <where>
+            <if test="chargeDateFrom != null">
+                CHARGE_DATE &gt;= #{chargeDateFrom}
+            </if>
+            <if test="chargeDateTo != null">
+                AND CHARGE_DATE &lt;= #{chargeDateTo}
+            </if>
+        </where>
     </select>
     <insert id="insertFT_UNITS">
         INSERT INTO
@@ -45,4 +53,13 @@
             #{fundTransferUnit.companyId.rawId}
         )
     </insert>
+    <update id="updateFT_UNITS">
+        UPDATE
+            FT_UNITS
+        SET
+            CHARGE_DATE = #{chargeDate.chargeDate},
+            COMPANY_ID = #{companyId.rawId}
+        WHERE
+            FT_UNIT_ID = #{fundTransferUnitId.rawId}
+    </update>
 </mapper>

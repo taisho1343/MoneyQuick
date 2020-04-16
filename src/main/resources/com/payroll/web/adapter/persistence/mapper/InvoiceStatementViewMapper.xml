@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.InvoiceStatementViewMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectINVOICE_STATEMENTS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+        SELECT
+            INVOICE_STATEMENT_ID,
+            FT_UNIT_ID,
+            INVOICE_NUMBER,
+            PAYMENT_DEADLINE,
+            BILLING_STATUS,
+            BILLING_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS,
+            PAYMENT_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS_REQUEST,
+            PAYMENT_REQUEST_UPDATE_DATE
+        FROM
+            INVOICE_STATEMENTS_VIEW
+        WHERE
+            INVOICE_STATEMENT_ID = #{invoiceStatementId}
+    </select>
+    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+        SELECT
+            INVOICE_STATEMENT_ID,
+            FT_UNIT_ID,
+            INVOICE_NUMBER,
+            PAYMENT_DEADLINE,
+            BILLING_STATUS,
+            BILLING_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS,
+            PAYMENT_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS_REQUEST,
+            PAYMENT_REQUEST_UPDATE_DATE
+        FROM
+            INVOICE_STATEMENTS_VIEW
+        WHERE
+            FT_UNIT_ID = #{fundTransferUnitId}
+    </select>
+    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+        SELECT
+            INVOICE_STATEMENT_ID,
+            FT_UNIT_ID,
+            INVOICE_NUMBER,
+            PAYMENT_DEADLINE,
+            BILLING_STATUS,
+            BILLING_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS,
+            PAYMENT_STATUS_UPDATE_DATE,
+            PAYMENT_STATUS_REQUEST,
+            PAYMENT_REQUEST_UPDATE_DATE
+        FROM
+            INVOICE_STATEMENTS_VIEW
+        WHERE
+            EXISTS (
+                SELECT
+                    FT_COMPANY_ID
+                FROM
+                    CHARGE_ORDERS
+                WHERE
+                    INVOICE_STATEMENTS_VIEW.INVOICE_STATEMENT_ID = CHARGE_ORDERS.INVOICE_STATEMENT_ID
+                    AND CHARGE_ORDERS.FT_COMPANY_ID = #{fundTransferCompanyId}
+            )
+    </select>
+</mapper>

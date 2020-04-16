@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.NotificationTemplateMapper">
+    <select id="selectNOTIFICATION_TITLE_byId" resultType="string">
+        SELECT
+            NOTIFICATION_TITLE_TEMPLATE
+        FROM
+            NOTIFICATION_TEMPLATES
+        WHERE
+            NOTIFICATION_TEMPLATE_ID = #{id}
+    </select>
+    <select id="selectNOTIFICATION_CONTENT_byId" resultType="string">
+        SELECT
+            NOTIFICATION_CONTENT_TEMPLATE
+        FROM
+            NOTIFICATION_TEMPLATES
+        WHERE
+            NOTIFICATION_TEMPLATE_ID = #{id}
+    </select>
+</mapper>

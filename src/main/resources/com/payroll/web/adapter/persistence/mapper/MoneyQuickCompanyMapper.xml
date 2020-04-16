@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.MoneyQuickCompanyMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectMQ_COMPANIES_byId" resultType="com.payroll.web.adapter.persistence.mapper.MQ_COMPANIES">
+        SELECT
+            MQ_COMPANY_ID,
+            COMPANY_NAME,
+            COMPANY_POSTAL_CODE,
+            COMPANY_ADDRESS,
+            PHONE_NUMBER,
+            BANK_NAME,
+            BRANCH_NAME,
+            ACCOUNT_TYPE,
+            ACCOUNT_HOLDER,
+            FINANCIAL_INSTITUTION_CODE,
+            TYPE_NUMBER,
+            ACCOUNT_NUMBER
+        FROM
+            MQ_COMPANIES
+        WHERE
+            MQ_COMPANY_ID = #{moneyQuickCompanyId}
+    </select>
+    <insert id="insertMQ_COMPANIES">
+        INSERT INTO
+            MQ_COMPANIES (
+                MQ_COMPANY_ID,
+                COMPANY_NAME,
+                COMPANY_POSTAL_CODE,
+                COMPANY_ADDRESS,
+                PHONE_NUMBER,
+                BANK_NAME,
+                BRANCH_NAME,
+                ACCOUNT_TYPE,
+                ACCOUNT_HOLDER,
+                FINANCIAL_INSTITUTION_CODE,
+                TYPE_NUMBER,
+                ACCOUNT_NUMBER
+            )
+        VALUES (
+            1,
+            #{moneyQuickCompanyName.rawName},
+            #{moneyQuickCompanyLocation.postalCode.rawCode},
+            #{moneyQuickCompanyLocation.address.rawAddress},
+            #{moneyQuickCompanyPhoneNumber.rawPhoneNumber},
+            #{bank.bankName.rawName},
+            #{bank.branchName.rawName},
+            #{bank.accountType},
+            #{bank.accountHolder.name},
+            #{bank.account.financialInstitutionCode.rawCode},
+            #{bank.account.typeNumber.rawNumber},
+            #{bank.account.accountNumber.rawNumber}
+        )
+    </insert>
+</mapper>

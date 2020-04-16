@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.PayrollCardMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectPAYROLL_CARD_ID_nextval" resultType="_long" flushCache="true">
+        SELECT
+            PAYROLL_CARD_ID_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectPAYROLL_CARDS_byId" resultType="com.payroll.web.adapter.persistence.mapper.PAYROLL_CARDS">
+        SELECT
+            PAYROLL_CARD_ID,
+            CARD_LABEL,
+            DESIRED_CHARGE_MONEY,
+            PRIORITY,
+            EMPLOYEE_ID,
+            FT_COMPANY_ID,
+            UPDATE_DATE
+        FROM
+            PAYROLL_CARDS
+        WHERE
+            PAYROLL_CARD_ID = #{payrollCardId}
+        ORDER BY UPDATE_DATE DESC
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+    <select id="selectPAYROLL_CARDS_byEmployeeId" resultType="com.payroll.web.adapter.persistence.mapper.PAYROLL_CARDS">
+        SELECT
+            PAYROLL_CARD_ID,
+            CARD_LABEL,
+            DESIRED_CHARGE_MONEY,
+            PRIORITY,
+            EMPLOYEE_ID,
+            FT_COMPANY_ID,
+            UPDATE_DATE
+        FROM (
+            SELECT
+                ROW_NUMBER() OVER (PARTITION BY PAYROLL_CARD_ID ORDER BY UPDATE_DATE DESC) AS idx,
+                PAYROLL_CARDS.*
+            FROM
+                PAYROLL_CARDS
+            WHERE
+                EMPLOYEE_ID = #{employeeId}
+        )
+        WHERE
+            idx = 1
+    </select>
+</mapper>

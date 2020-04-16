@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatic.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.payroll.web.adapter.persistence.mapper.InvoiceStatementMapper">
-    <select id="selectINVOICE_STATEMENTS_byFundTransferUnitId"
-            resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectINVOICE_STATEMENT_ID_nextval" resultType="_long" flushCache="true">
+        SELECT
+            INVOICE_STATEMENT_ID_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectINVOICE_NUMBER_nextval" resultType="string" flushCache="true">
+        SELECT
+            INVOICE_NUMBER_SEQUENCE.nextval
+        FROM
+            DUAL
+    </select>
+    <select id="selectINVOICE_STATEMENTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS">
         SELECT
             INVOICE_STATEMENT_ID,
             INVOICE_NUMBER,
@@ -15,4 +27,29 @@
         WHERE
             FT_UNIT_ID = #{fundTransferUnitId}
     </select>
+    <insert id="insertINVOICE_STATEMENTS">
+        INSERT INTO
+            INVOICE_STATEMENTS (
+                INVOICE_STATEMENT_ID,
+                FT_UNIT_ID,
+                INVOICE_NUMBER,
+                PAYMENT_DEADLINE
+            )
+        VALUES (
+            #{invoiceStatementId.rawId},
+            #{fundTransferUnitId.rawId},
+            #{invoiceNumber.rawNumber},
+            #{paymentDeadline.paymentDeadline}
+        )
+    </insert>
+    <update id="updateINVOICE_STATEMENTS">
+        UPDATE
+            INVOICE_STATEMENTS
+        SET
+            FT_UNIT_ID = #{fundTransferUnitId.rawId},
+            INVOICE_NUMBER = #{invoiceNumber.rawNumber},
+            PAYMENT_DEADLINE = #{paymentDeadline.paymentDeadline}
+        WHERE
+            INVOICE_STATEMENT_ID =#{invoiceStatementId.rawId}
+    </update>
 </mapper>

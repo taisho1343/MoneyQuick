@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.PaymentStatusMapper">
+    <!--suppress MybatisMapperXmlInspection -->
+    <select id="selectPAYMENT_STATUS_byId_where_latest"
+            resultType="com.payroll.web.adapter.persistence.mapper.PAYMENT_STATUS">
+        SELECT
+            INVOICE_STATEMENT_ID,
+            PAYMENT_STATUS,
+            UPDATE_DATE
+        FROM
+            PAYMENT_STATUS
+        WHERE
+            INVOICE_STATEMENT_ID = #{id}
+        ORDER BY UPDATE_DATE DESC
+        FETCH FIRST 1 ROWS ONLY
+    </select>
+    <insert id="insertPAYMENT_STATUS">
+        INSERT INTO
+            PAYMENT_STATUS (
+                INVOICE_STATEMENT_ID,
+                PAYMENT_STATUS,
+                UPDATE_DATE
+            )
+        VALUES (
+            #{invoiceStatement.invoiceStatementId.rawId},
+            #{invoiceStatement.paymentStatus},
+            #{updateDate}
+        )
+    </insert>
+</mapper>
