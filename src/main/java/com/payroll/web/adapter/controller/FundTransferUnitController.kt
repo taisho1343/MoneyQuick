@@ -29,6 +29,7 @@ import javax.validation.Valid
 @RequestMapping("companies")
 class FundTransferUnitController(
         val addFundTransferUnitApplicationService: AddFundTransferUnitApplicationService,
+        val changeFundTransferUnitStatusApplicationService: ChangeFundTransferUnitStatusApplicationService,
         val queryRepositoryFundTransferUnit: QueryRepositoryFundTransferUnit,
         val changeFundTransferUnitStatusApplicationService: ChangeFundTransferUnitStatusApplicationService
 ) {
@@ -73,6 +74,18 @@ class FundTransferUnitController(
             uriComponentsBuilder: UriComponentsBuilder
     ): ResponseEntity<QueryModelFundTransferUnit> {
         changeFundTransferUnitStatusApplicationService.changeStatusToGeneratedInvoice(FundTransferUnitId(fundTransferUnitId))
+
+        val fundTransferUnit = queryRepositoryFundTransferUnit.findQueryModelFundTransferUnit(fundTransferUnitId)
+                ?: throw QueryModelNotFoundException("not found QueryModel FundTransferUnit by $fundTransferUnitId")
+        return ResponseEntity.ok(fundTransferUnit)
+    }
+
+    @PutMapping("{companyId}/fundTransferUnits/{fundTransferUnitId}/canceled")
+    fun putChangeStatusToCanceled(
+            @PathVariable("companyId") companyId: Long,
+            @PathVariable("fundTransferUnitId") fundTransferUnitId: Long
+    ): ResponseEntity<QueryModelFundTransferUnit> {
+        changeFundTransferUnitStatusApplicationService.changeStatusToCanceled(FundTransferUnitId(fundTransferUnitId))
 
         val fundTransferUnit = queryRepositoryFundTransferUnit.findQueryModelFundTransferUnit(fundTransferUnitId)
                 ?: throw QueryModelNotFoundException("not found QueryModel FundTransferUnit by $fundTransferUnitId")

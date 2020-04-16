@@ -33,4 +33,19 @@ class ChangeFundTransferUnitStatusApplicationService(
         invoiceStatementRepository.updateInvoiceStatement(invoiceStatement)
     }
 
+    fun changeStatusToCanceled(fundTransferUnitId: FundTransferUnitId) {
+        checkPreCondition {
+            fundTransferUnitRepository.findById(fundTransferUnitId).let { fundTransferUnit ->
+                if (fundTransferUnit == null) throw EntityNotFoundException("not found FundTransferUnit by $fundTransferUnitId")
+                if (!fundTransferUnit.canChangeToCanceled()) throw IllegalStateEntityException("FundTransferUnit status can't change to Canceled")
+            }
+        }
+
+        val fundTransferUnit = fundTransferUnitRepository.findById(fundTransferUnitId) { "not found FundTransferUnit by $fundTransferUnitId" }
+
+        fundTransferUnit.changeToCanceled()
+
+        fundTransferUnitRepository.updateFundTransferUnit(fundTransferUnit)
+    }
+
 }

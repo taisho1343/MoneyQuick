@@ -54,6 +54,8 @@ data class FundTransferUnit(
 
     fun canCreateInvoiceStatement(): Boolean = fundTransferUnitStatus == READY_TO_DISTRIBUTE
 
+    fun canChangeToCanceled(): Boolean = canTransition(CANCELED)
+
     fun chargeRequests() = chargeRequests.map { it.copy() }
 
     fun ngChargeRequests() = chargeRequests.filter { it.chargeRequestStatus() == NG }.map { it.copy() }
