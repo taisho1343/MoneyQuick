@@ -8,11 +8,14 @@ import com.payroll.web.adapter.controller.form.FundTransferUnitToAddForm
 import com.payroll.web.central.command.applicationservice.AddChargeRequestCommand
 import com.payroll.web.central.command.applicationservice.AddFundTransferUnitApplicationService
 import com.payroll.web.central.command.applicationservice.AddFundTransferUnitCommand
+import com.payroll.web.central.command.applicationservice.ChangeFundTransferUnitStatusApplicationService
 import com.payroll.web.central.command.domain.model.company.CompanyId
 import com.payroll.web.central.command.domain.model.fundtransferunit.ChargeDate
+import com.payroll.web.central.command.domain.model.fundtransferunit.FundTransferUnitId
 import com.payroll.web.central.command.domain.model.fundtransferunit.chargerequest.AccountForRequest
 import com.payroll.web.central.command.domain.type.Money
 import com.payroll.web.central.command.domain.type.account.*
+import com.payroll.web.central.query.model.QueryModelFundTransferUnit
 import com.payroll.web.central.query.repository.QueryRepositoryFundTransferUnit
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -26,7 +29,8 @@ import javax.validation.Valid
 @RequestMapping("companies")
 class FundTransferUnitController(
         val addFundTransferUnitApplicationService: AddFundTransferUnitApplicationService,
-        val queryRepositoryFundTransferUnit: QueryRepositoryFundTransferUnit
+        val queryRepositoryFundTransferUnit: QueryRepositoryFundTransferUnit,
+        val changeFundTransferUnitStatusApplicationService: ChangeFundTransferUnitStatusApplicationService
 ) {
 
     @PostMapping("{companyId}/fundTransferUnits")
@@ -61,6 +65,19 @@ class FundTransferUnitController(
             @PathVariable("fundTransferUnitId") fundTransferUnitId: Long
     ) = queryRepositoryFundTransferUnit.findQueryModelFundTransferUnit(fundTransferUnitId)
             ?: throw QueryModelNotFoundException("FundTransferUnit(id = $fundTransferUnitId) not found")
+
+    @PutMapping("{companyId}/fundTransferUnits/{fundTransferUnitId}/generatedInvoice")
+    fun putChangeStatusToGeneratedInvoice(
+            @PathVariable("companyId") companyId: Long,
+            @PathVariable("fundTransferUnitId") fundTransferUnitId: Long,
+            uriComponentsBuilder: UriComponentsBuilder
+    ): ResponseEntity<QueryModelFundTransferUnit> {
+        changeFundTransferUnitStatusApplicationService.changeStatusToGeneratedInvoice(FundTransferUnitId(fundTransferUnitId))
+
+        val fundTransferUnit = queryRepositoryFundTransferUnit.findQueryModelFundTransferUnit(fundTransferUnitId)
+                ?: throw QueryModelNotFoundException("not found QueryModel FundTransferUnit by $fundTransferUnitId")
+        return ResponseEntity.ok(fundTransferUnit)
+    }
 
     private fun List<ChargeRequestForm>.convertToAddChargeRequestCommands() = map {
         AddChargeRequestCommand(
