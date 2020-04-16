@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.EmployeeAccountMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.employee.EmployeeAccountMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectFINANCIAL_INSTITUTION_CODE_nextval" resultType="string" flushCache="true">
         SELECT

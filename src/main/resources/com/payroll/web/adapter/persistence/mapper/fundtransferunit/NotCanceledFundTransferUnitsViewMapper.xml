@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.NotCanceledFundTransferUnitsViewMapper">
-    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.NOT_CANCELED_FT_UNITS_VIEW">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.fundtransferunit.NotCanceledFundTransferUnitsViewMapper">
+    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.fundtransferunit.NOT_CANCELED_FT_UNITS_VIEW">
         SELECT
             FT_UNIT_ID,
             CHARGE_DATE,
@@ -16,7 +16,7 @@
         WHERE
             FT_UNIT_ID = #{id}
     </select>
-    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byStatus_where_latest" resultType="com.payroll.web.adapter.persistence.mapper.NOT_CANCELED_FT_UNITS_VIEW">
+    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byStatus_where_latest" resultType="com.payroll.web.adapter.persistence.mapper.fundtransferunit.NOT_CANCELED_FT_UNITS_VIEW">
         SELECT
             FT_UNIT_ID,
             CHARGE_DATE,
@@ -29,7 +29,7 @@
         WHERE
             FT_UNIT_STATUS = #{status}
     </select>
-    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.NOT_CANCELED_FT_UNITS_VIEW">
+    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_byCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.fundtransferunit.NOT_CANCELED_FT_UNITS_VIEW">
         SELECT
             FT_UNIT_ID,
             CHARGE_DATE,
@@ -42,7 +42,7 @@
         WHERE
             COMPANY_ID = #{companyId}
     </select>
-    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_bySearchCriteria" resultType="com.payroll.web.adapter.persistence.mapper.NOT_CANCELED_FT_UNITS_VIEW">
+    <select id="selectNOT_CANCELED_FT_UNITS_VIEW_bySearchCriteria" resultType="com.payroll.web.adapter.persistence.mapper.fundtransferunit.NOT_CANCELED_FT_UNITS_VIEW">
         SELECT
             FT_UNIT_ID,
             CHARGE_DATE,

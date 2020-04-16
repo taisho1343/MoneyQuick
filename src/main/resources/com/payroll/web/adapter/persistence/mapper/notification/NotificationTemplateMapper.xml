@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.NotificationTemplateMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.notification.NotificationTemplateMapper">
     <select id="selectNOTIFICATION_TITLE_byId" resultType="string">
         SELECT
             NOTIFICATION_TITLE_TEMPLATE

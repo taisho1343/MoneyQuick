@@ -2,31 +2,29 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.PaymentStatusChangeRequestMapper">
-    <!--suppress MybatisMapperXmlInspection -->
-    <select id="selectPAYMENT_STATUS_CHANGE_REQUESTS_byId_where_latest"
-            resultType="com.payroll.web.adapter.persistence.mapper.PAYMENT_STATUS_REQUESTS">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.invoicestatement.BillingStatusMapper">
+    <select id="selectBILLING_STATUS_byId_where_latest" resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.BILLING_STATUS">
         SELECT
             INVOICE_STATEMENT_ID,
-            PAYMENT_STATUS_REQUEST,
+            BILLING_STATUS,
             UPDATE_DATE
         FROM
-            PAYMENT_STATUS_REQUESTS
+            BILLING_STATUS
         WHERE
             INVOICE_STATEMENT_ID = #{id}
         ORDER BY UPDATE_DATE DESC
         FETCH FIRST 1 ROWS ONLY
     </select>
-    <insert id="insertPAYMENT_STATUS_CHANGE_REQUESTS">
+    <insert id="insertBILLING_STATUS">
         INSERT INTO
-            PAYMENT_STATUS_REQUESTS (
+            BILLING_STATUS (
                 INVOICE_STATEMENT_ID,
-                PAYMENT_STATUS_REQUEST,
+                BILLING_STATUS,
                 UPDATE_DATE
             )
         VALUES (
             #{invoiceStatement.invoiceStatementId.rawId},
-            #{invoiceStatement.paymentStatusChangeRequest},
+            #{invoiceStatement.billingStatus},
             #{updateDate}
         )
     </insert>

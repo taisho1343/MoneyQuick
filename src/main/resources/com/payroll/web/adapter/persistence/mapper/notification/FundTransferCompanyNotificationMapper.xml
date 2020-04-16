@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.FundTransferCompanyNotificationMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.notification.FundTransferCompanyNotificationMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectFT_NOTIFICATION_ID_nextval" resultType="_long" flushCache="true">
         SELECT
@@ -11,7 +11,7 @@
             DUAL
     </select>
     <select id="selectFT_COMPANY_NOTIFICATIONS_byFundTransferCompanyId"
-            resultType="com.payroll.web.adapter.persistence.mapper.FT_COMPANY_NOTIFICATIONS">
+            resultType="com.payroll.web.adapter.persistence.mapper.notification.FT_COMPANY_NOTIFICATIONS">
         SELECT
             FT_COMPANY_NOTIFICATION_ID,
             TITLE,

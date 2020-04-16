@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.RepresentativeMapper">
-    <select id="selectREPRESENTATIVES_byCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.REPRESENTATIVES">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.company.RepresentativeMapper">
+    <select id="selectREPRESENTATIVES_byCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.company.REPRESENTATIVES">
         SELECT
             REPRESENTATIVE_ID,
             REPRESENTATIVE_NAME,

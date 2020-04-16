@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.PaymentStatusMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.invoicestatement.PaymentStatusMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectPAYMENT_STATUS_byId_where_latest"
-            resultType="com.payroll.web.adapter.persistence.mapper.PAYMENT_STATUS">
+            resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.PAYMENT_STATUS">
         SELECT
             INVOICE_STATEMENT_ID,
             PAYMENT_STATUS,

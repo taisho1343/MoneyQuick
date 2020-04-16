@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.CompanyNotificationTagMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.notification.CompanyNotificationTagMapper">
     <select id="selectCOMPANY_NOTIFICATION_TAGS_byCompanyNotificationId"
-            resultType="com.payroll.web.adapter.persistence.mapper.COMPANY_NOTIFICATION_TAGS">
+            resultType="com.payroll.web.adapter.persistence.mapper.notification.COMPANY_NOTIFICATION_TAGS">
         SELECT
             COMPANY_NOTIFICATION_ID,
             TAG_ID

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.ChargeRequestMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.fundtransferunit.ChargeRequestMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectCHARGE_REQUEST_ID_nextval" resultType="_long" flushCache="true">
         SELECT
@@ -10,7 +10,7 @@
         FROM
             DUAL
     </select>
-    <select id="selectCHARGE_REQUESTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.CHARGE_REQUESTS">
+    <select id="selectCHARGE_REQUESTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.fundtransferunit.CHARGE_REQUESTS">
         SELECT
             CHARGE_REQUEST_ID,
             FT_UNIT_ID,

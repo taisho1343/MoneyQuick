@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.TagMapper">
-    <select id="selectTAGS_byTagId" resultType="com.payroll.web.adapter.persistence.mapper.TAGS">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.notification.TagMapper">
+    <select id="selectTAGS_byTagId" resultType="com.payroll.web.adapter.persistence.mapper.notification.TAGS">
         SELECT
             TAG_ID,
             TAG_LABEL

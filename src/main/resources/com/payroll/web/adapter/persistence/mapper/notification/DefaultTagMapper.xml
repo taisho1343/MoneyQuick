@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.DefaultTagMapper">
-    <select id="selectDEFAULT_TAGS_byNotificationTemplateId" resultType="com.payroll.web.adapter.persistence.mapper.DEFAULT_TAGS">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.notification.DefaultTagMapper">
+    <select id="selectDEFAULT_TAGS_byNotificationTemplateId" resultType="com.payroll.web.adapter.persistence.mapper.notification.DEFAULT_TAGS">
         SELECT
             TAG_ID,
             NOTIFICATION_TEMPLATE_ID

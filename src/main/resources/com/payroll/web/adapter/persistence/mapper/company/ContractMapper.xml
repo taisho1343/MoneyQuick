@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.ContractMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.company.ContractMapper">
     <select id="selectCONTRACTS_for_fundTransferCompany_byFundTransferCompanyId"
-            resultType="com.payroll.web.adapter.persistence.mapper.CONTRACTS">
+            resultType="com.payroll.web.adapter.persistence.mapper.company.CONTRACTS">
         SELECT
             COMPANY_ID,
             FT_COMPANY_ID,

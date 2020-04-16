@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.InvoiceStatementMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.invoicestatement.InvoiceStatementMapper">
     <!--suppress MybatisMapperXmlInspection -->
     <select id="selectINVOICE_STATEMENT_ID_nextval" resultType="_long" flushCache="true">
         SELECT
@@ -16,7 +16,7 @@
         FROM
             DUAL
     </select>
-    <select id="selectINVOICE_STATEMENTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS">
+    <select id="selectINVOICE_STATEMENTS_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.INVOICE_STATEMENTS">
         SELECT
             INVOICE_STATEMENT_ID,
             INVOICE_NUMBER,

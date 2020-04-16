@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.InvoiceStatementViewMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.invoicestatement.InvoiceStatementViewMapper">
     <!--suppress MybatisMapperXmlInspection -->
-    <select id="selectINVOICE_STATEMENTS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+    <select id="selectINVOICE_STATEMENTS_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.INVOICE_STATEMENTS_VIEW">
         SELECT
             INVOICE_STATEMENT_ID,
             FT_UNIT_ID,
@@ -21,7 +21,7 @@
         WHERE
             INVOICE_STATEMENT_ID = #{invoiceStatementId}
     </select>
-    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferUnitId" resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.INVOICE_STATEMENTS_VIEW">
         SELECT
             INVOICE_STATEMENT_ID,
             FT_UNIT_ID,
@@ -38,7 +38,7 @@
         WHERE
             FT_UNIT_ID = #{fundTransferUnitId}
     </select>
-    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.INVOICE_STATEMENTS_VIEW">
+    <select id="selectINVOICE_STATEMENTS_VIEW_byFundTransferCompanyId" resultType="com.payroll.web.adapter.persistence.mapper.invoicestatement.INVOICE_STATEMENTS_VIEW">
         SELECT
             INVOICE_STATEMENT_ID,
             FT_UNIT_ID,

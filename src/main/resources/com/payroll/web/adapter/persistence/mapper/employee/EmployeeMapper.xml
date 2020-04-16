@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.EmployeeMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.employee.EmployeeMapper">
     <!--suppress MybatisMapperXmlInspection -->
-    <select id="selectEMPLOYEES_byEmployeeId" resultType="com.payroll.web.adapter.persistence.mapper.EMPLOYEES">
+    <select id="selectEMPLOYEES_byEmployeeId" resultType="com.payroll.web.adapter.persistence.mapper.employee.EMPLOYEES">
         SELECT
             EMPLOYEE_ID,
             COMPANY_ID,

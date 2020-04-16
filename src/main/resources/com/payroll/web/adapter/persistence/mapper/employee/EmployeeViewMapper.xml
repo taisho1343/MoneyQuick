@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.payroll.web.adapter.persistence.mapper.EmployeeViewMapper">
+<mapper namespace="com.payroll.web.adapter.persistence.mapper.employee.EmployeeViewMapper">
     <!--suppress MybatisMapperXmlInspection -->
-    <select id="selectEMPLOYEES_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.EMPLOYEES_VIEW">
+    <select id="selectEMPLOYEES_VIEW_byId" resultType="com.payroll.web.adapter.persistence.mapper.employee.EMPLOYEES_VIEW">
         SELECT
             EMPLOYEE_ID,
             COMPANY_ID,
@@ -17,7 +17,7 @@
         WHERE
             EMPLOYEE_ID = #{id}
     </select>
-    <select id="selectEMPLOYEES_VIEW_byEnabledEmployeeAccount"  resultType="com.payroll.web.adapter.persistence.mapper.EMPLOYEES_VIEW">
+    <select id="selectEMPLOYEES_VIEW_byEnabledEmployeeAccount"  resultType="com.payroll.web.adapter.persistence.mapper.employee.EMPLOYEES_VIEW">
         SELECT
             EMPLOYEE_ID,
             COMPANY_ID,
